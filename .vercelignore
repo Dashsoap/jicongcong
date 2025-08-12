@@ -1,0 +1,22 @@
+# 排除种子数据文件，避免构建时导入错误
+prisma/seed.ts
+
+# 排除开发文件
+*.test.js
+*.test.ts
+*.spec.js
+*.spec.ts
+
+# 排除调试文件
+debug-*.js
+test-*.js
+
+# 排除文档文件
+*.md
+!README.md
+
+# 排除环境文件
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local

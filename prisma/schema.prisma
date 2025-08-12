@@ -1,0 +1,167 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  STUDENT
+  TEACHER
+  ADMIN
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  role      Role     @default(STUDENT)
+  createdAt DateTime @default(now())
+  
+  // 关联关系
+  enrollments   Enrollment[]
+  attempts      Attempt[]
+  mastery       Mastery[]
+  conversations Conversation[]
+}
+
+model Classroom {
+  id        String   @id @default(cuid())
+  name      String
+  createdAt DateTime @default(now())
+  
+  // 关联关系
+  enrollments Enrollment[]
+  assignments Assignment[]
+}
+
+model Enrollment {
+  id          String @id @default(cuid())
+  userId      String
+  classroomId String
+  roleInClass String @default("student")
+  
+  // 关联关系
+  User      User      @relation(fields: [userId], references: [id])
+  Classroom Classroom @relation(fields: [classroomId], references: [id])
+  
+  @@unique([userId, classroomId])
+}
+
+model Concept {
+  id      String @id @default(cuid())
+  subject String
+  name    String
+  grade   String
+  weight  Int    @default(1)
+  
+  // 关联关系
+  items   Item[]
+  mastery Mastery[]
+}
+
+model Item {
+  id         String @id @default(cuid())
+  conceptId  String
+  difficulty Int    @default(0)
+  stem       String // JSON string
+  solution   String // JSON string
+  
+  // 关联关系
+  Concept  Concept   @relation(fields: [conceptId], references: [id])
+  attempts Attempt[]
+  
+  @@index([conceptId, difficulty])
+}
+
+model Attempt {
+  id        String   @id @default(cuid())
+  userId    String
+  itemId    String
+  correct   Boolean
+  timeMs    Int
+  createdAt DateTime @default(now())
+  
+  // 关联关系
+  User User @relation(fields: [userId], references: [id])
+  Item Item @relation(fields: [itemId], references: [id])
+  
+  @@index([userId, createdAt])
+}
+
+model Mastery {
+  userId    String
+  conceptId String
+  theta     Float    @default(0)
+  updatedAt DateTime @default(now()) @updatedAt
+  
+  // 关联关系
+  User    User    @relation(fields: [userId], references: [id])
+  Concept Concept @relation(fields: [conceptId], references: [id])
+  
+  @@id([userId, conceptId])
+}
+
+model Conversation {
+  id        String   @id @default(cuid())
+  userId    String
+  subject   String?
+  grade     String?
+  createdAt DateTime @default(now())
+  
+  // 关联关系
+  messages Message[]
+  User     User      @relation(fields: [userId], references: [id])
+}
+
+model Message {
+  id             String   @id @default(cuid())
+  conversationId String
+  role           String // user|assistant|system
+  content        String
+  meta           String? // JSON string
+  createdAt      DateTime @default(now())
+  
+  // 关联关系
+  Conversation Conversation @relation(fields: [conversationId], references: [id])
+  
+  @@index([conversationId, createdAt])
+}
+
+model Assignment {
+  id          String    @id @default(cuid())
+  classroomId String
+  title       String
+  dueAt       DateTime?
+  items       String    // JSON string - array of Item ids / payload
+  createdAt   DateTime  @default(now())
+  
+  // 关联关系
+  Classroom Classroom @relation(fields: [classroomId], references: [id])
+}
+
+model AnswerCache {
+  id        String   @id @default(cuid())
+  normHash  String   @unique // hash(query_normalized + subject + grade)
+  question  String
+  subject   String?
+  grade     String?
+  answerMd  String
+  meta      String?  // JSON string
+  createdAt DateTime @default(now())
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String?
+  path      String
+  action    String
+  detail    String?  // JSON string
+  latencyMs Int?
+  createdAt DateTime @default(now())
+}

@@ -39,28 +39,25 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
       async authorize(credentials) {
         try {
-          // 验证输入数据
+          // 验证输入数据并做基础清洗
           const { username, password } = loginSchema.parse(credentials)
-          
-          // 首先尝试从数据库查找用户
-          let dbUser = await prisma.user.findFirst({
-            where: {
-              OR: [
-                { email: username },
-                { name: username }
-              ]
-            }
-          })
-          
-          // 如果数据库中没有找到，使用模拟用户数据
-          if (!dbUser) {
-            const mockUser = users.find(u => u.username === username || u.email === username)
-            if (!mockUser || mockUser.password !== password) {
-              console.log(`登录失败：用户名 ${username} 不存在或密码错误`)
-              return null
-            }
-            
-            // 创建或更新数据库中的用户
+          const normalizedUsername = username.trim().toLowerCase()
+          const normalizedPassword = password.trim()
+
+          // 1) 优先校验内置演示账号，避免数据库异常导致“密码错误”误判
+          const mockUser = users.find(u =>
+            u.username.toLowerCase() === normalizedUsername ||
+            u.email.toLowerCase() === normalizedUsername
+          )
+
+          if (!mockUser || mockUser.password !== normalizedPassword) {
+            console.log(`登录失败：用户名 ${username} 不存在或密码错误`)
+            return null
+          }
+
+          // 2) 尝试把演示账号写入/更新到数据库（失败也不影响登录）
+          let dbUser = undefined as undefined | { id: string; name: string | null; email: string; role: any }
+          try {
             dbUser = await prisma.user.upsert({
               where: { email: mockUser.email },
               update: {
@@ -73,23 +70,25 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 role: mockUser.role as any
               }
             })
-          } else {
-            // 验证密码（这里简化处理，实际应该使用加密密码）
-            const mockUser = users.find(u => u.email === dbUser!.email)
-            if (!mockUser || mockUser.password !== password) {
-              console.log(`登录失败：用户名 ${username} 密码错误`)
-              return null
-            }
+          } catch (dbError) {
+            console.warn('登录成功但数据库不可用，使用内存用户信息继续：', dbError)
           }
-          
-          console.log(`登录成功：用户 ${dbUser.name} (${dbUser.email})`)
-          
+
+          const resultUser = dbUser ?? {
+            id: mockUser.id,
+            name: mockUser.name,
+            email: mockUser.email,
+            role: mockUser.role as any,
+          }
+
+          console.log(`登录成功：用户 ${resultUser.name} (${resultUser.email})`)
+
           // 返回用户信息（不包含敏感信息）
           return {
-            id: dbUser.id,
-            name: dbUser.name || '',
-            email: dbUser.email,
-            role: dbUser.role,
+            id: resultUser.id,
+            name: resultUser.name || '',
+            email: resultUser.email,
+            role: resultUser.role,
           }
         } catch (error) {
           console.error("认证过程中发生错误:", error)

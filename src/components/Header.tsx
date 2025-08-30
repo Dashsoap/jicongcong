@@ -50,6 +50,7 @@ export default function Header({ currentPage }: HeaderProps = {}) {
 
   return (
     <nav className="bg-white shadow-sm border-b">
+      {/* DEBUG: Header v2.0 with 母题系统 */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           {/* 左侧 - 品牌和页面标识 */}

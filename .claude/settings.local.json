@@ -19,7 +19,8 @@
       "Read(/Users/mac/Library/Containers/com.wiheads.paste/Data/tmp/images/**)",
       "Bash(find:*)",
       "Bash(grep:*)",
-      "Read(/Users/mac/Library/Containers/com.wiheads.paste/Data/tmp/images/**)"
+      "Read(/Users/mac/Library/Containers/com.wiheads.paste/Data/tmp/images/**)",
+      "Bash(npm run build:*)"
     ],
     "deny": [],
     "ask": []

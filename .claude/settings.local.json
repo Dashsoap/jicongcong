@@ -18,7 +18,8 @@
       "Bash(git add:*)",
       "Read(/Users/mac/Library/Containers/com.wiheads.paste/Data/tmp/images/**)",
       "Bash(find:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Read(/Users/mac/Library/Containers/com.wiheads.paste/Data/tmp/images/**)"
     ],
     "deny": [],
     "ask": []

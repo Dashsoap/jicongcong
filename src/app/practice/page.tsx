@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback, Suspense } from 'react'
-import { useSession } from 'next-auth/react'
+import { useSession, signOut } from 'next-auth/react'
 import { toast } from 'sonner'
 import { postJSON } from '@/lib/fetcher'
 import { isNumericalQuestion } from '@/lib/math'

@@ -78,11 +78,11 @@ export async function GET(request: NextRequest) {
         .filter(Boolean)
       
       const avgTheta = relatedMasteries.length > 0
-        ? relatedMasteries.reduce((sum, m) => sum + m.theta, 0) / relatedMasteries.length
+        ? relatedMasteries.reduce((sum, m) => sum + m!.theta, 0) / relatedMasteries.length
         : 0
       
-      const totalAttempts = relatedMasteries.reduce((sum, m) => sum + m.attempts, 0)
-      const totalCorrect = relatedMasteries.reduce((sum, m) => sum + m.correct, 0)
+      const totalAttempts = relatedMasteries.reduce((sum, m) => sum + m!.attempts, 0)
+      const totalCorrect = relatedMasteries.reduce((sum, m) => sum + m!.correct, 0)
 
       return {
         id: item.id,

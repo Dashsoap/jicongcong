@@ -3,6 +3,7 @@
 import { useSession, signOut } from 'next-auth/react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useState } from 'react'
 
 interface HeaderProps {
   currentPage?: 'home' | 'ask' | 'practice' | 'parent-items' | 'teacher'
@@ -11,6 +12,7 @@ interface HeaderProps {
 export default function Header({ currentPage }: HeaderProps = {}) {
   const { data: session } = useSession()
   const pathname = usePathname()
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   // 自动检测当前页面
   const detectCurrentPage = () => {
@@ -123,14 +125,79 @@ export default function Header({ currentPage }: HeaderProps = {}) {
 
             {/* 移动端菜单按钮 */}
             <div className="md:hidden">
-              <button className="text-gray-600 hover:text-gray-900">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
+              <button 
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="text-gray-600 hover:text-gray-900"
+              >
+                {mobileMenuOpen ? (
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                ) : (
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  </svg>
+                )}
               </button>
             </div>
           </div>
         </div>
+
+        {/* 移动端导航菜单 */}
+        {mobileMenuOpen && (
+          <div className="md:hidden border-t border-gray-200 bg-white">
+            <div className="px-4 py-2 space-y-1">
+              {navItems.map(item => (
+                <Link 
+                  key={item.key}
+                  href={item.href}
+                  className={`block px-3 py-2 rounded-md transition-colors ${
+                    current === item.key
+                      ? 'text-blue-600 font-medium bg-blue-50'
+                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                  }`}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {item.label}
+                </Link>
+              ))}
+              
+              {/* 教师控制台 - 移动端 */}
+              {(session?.user?.role === 'TEACHER' || session?.user?.role === 'ADMIN') && (
+                <Link 
+                  href="/teacher"
+                  className={`block px-3 py-2 rounded-md transition-colors ${
+                    current === 'teacher'
+                      ? 'text-red-600 font-medium bg-red-50'
+                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                  }`}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  教师控制台
+                </Link>
+              )}
+
+              {/* 用户信息 - 移动端 */}
+              {session && (
+                <div className="pt-2 border-t border-gray-200 mt-2">
+                  <div className="px-3 py-2 text-sm">
+                    <span className="text-gray-500">欢迎，</span>
+                    <span className="font-medium text-gray-900">{session.user.name}</span>
+                  </div>
+                  <button
+                    onClick={() => {
+                      setMobileMenuOpen(false)
+                      signOut({ callbackUrl: '/' })
+                    }}
+                    className="block w-full text-left px-3 py-2 text-sm text-gray-500 hover:text-gray-700 hover:bg-gray-50 rounded-md transition-colors"
+                  >
+                    退出
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </nav>
   )

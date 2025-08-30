@@ -1,8 +1,9 @@
 'use client'
 
-import { useSession, signOut } from 'next-auth/react'
+import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { Suspense } from 'react'
+import Header from '@/components/Header'
 
 function HomeContent() {
   const { data: session, status } = useSession()
@@ -20,38 +21,7 @@ function HomeContent() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-      {/* 顶部导航栏 */}
-      <nav className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            <div className="flex items-center">
-              <h1 className="text-xl font-bold text-gray-900">岭鹿AI</h1>
-            </div>
-            <div className="flex items-center space-x-4">
-              {session ? (
-                <>
-                  <span className="text-sm text-gray-600">
-                    欢迎，{session.user.name}
-                  </span>
-                  <button
-                    onClick={() => signOut({ callbackUrl: '/' })}
-                    className="px-3 py-2 text-sm text-gray-600 hover:text-gray-900 transition-colors"
-                  >
-                    退出登录
-                  </button>
-                </>
-              ) : (
-                <Link
-                  href="/login"
-                  className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 transition-colors"
-                >
-                  登录
-                </Link>
-              )}
-            </div>
-          </div>
-        </div>
-      </nav>
+      <Header currentPage="home" />
 
       {/* 主要内容 */}
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -77,6 +47,12 @@ function HomeContent() {
               >
                 📚 智能练习
               </Link>
+              <Link
+                href="/parent-items"
+                className="inline-flex items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-700 transition-colors"
+              >
+                🎯 母题系统
+              </Link>
             </div>
           ) : (
             <div className="mt-10">
@@ -91,7 +67,7 @@ function HomeContent() {
         </div>
 
         {/* 功能介绍 */}
-        <div className="mt-20 grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="bg-white rounded-lg shadow-md p-6">
             <div className="text-2xl mb-4">💬</div>
             <h3 className="text-lg font-semibold text-gray-900 mb-2">AI 问答</h3>
@@ -104,6 +80,13 @@ function HomeContent() {
             <h3 className="text-lg font-semibold text-gray-900 mb-2">智能练习</h3>
             <p className="text-gray-600">
               基于ELO算法的自适应练习系统，根据你的能力水平推荐合适的题目
+            </p>
+          </div>
+          <div className="bg-white rounded-lg shadow-md p-6">
+            <div className="text-2xl mb-4">🎯</div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">母题系统</h3>
+            <p className="text-gray-600">
+              500道高频母题精准推荐，基于知识点权重的个性化训练
             </p>
           </div>
         </div>

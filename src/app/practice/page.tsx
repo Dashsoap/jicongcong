@@ -1,10 +1,11 @@
 'use client'
 
 import { useState, useEffect, useCallback, Suspense } from 'react'
-import { useSession, signOut } from 'next-auth/react'
+import { useSession } from 'next-auth/react'
 import { toast } from 'sonner'
 import { postJSON } from '@/lib/fetcher'
 import { isNumericalQuestion } from '@/lib/math'
+import Header from '@/components/Header'
 
 interface PracticeItem {
   id: string
@@ -45,7 +46,7 @@ function PracticePageContent() {
   const [results, setResults] = useState<AttemptResult[]>([])
   const [subject, setSubject] = useState('数学')
   const [isLoading, setIsLoading] = useState(false)
-  const [startTime, setStartTime] = useState<number>(0)
+  const [startTime, setStartTime] = useState<number | null>(null)
   const [showNumericalInput, setShowNumericalInput] = useState(false)
 
   const appName = process.env.NEXT_PUBLIC_APP_NAME || '岭鹿AI'
@@ -65,6 +66,13 @@ function PracticePageContent() {
     localStorage.setItem('tutorAI_practice_subject', subject)
   }, [subject])
 
+  // 当题目或题目索引改变时重新设置开始时间
+  useEffect(() => {
+    if (items.length > 0 && currentIndex < items.length) {
+      setStartTime(Date.now())
+    }
+  }, [items.length, currentIndex])
+
   // 加载练习题
   const loadPracticeItems = useCallback(async () => {
     setIsLoading(true)
@@ -74,7 +82,6 @@ function PracticePageContent() {
       setCurrentIndex(0)
       setResults([])
       setUserAnswer('')
-      setStartTime(Date.now())
       
       // 检查第一题是否是数值题
       if (data.items.length > 0) {
@@ -104,7 +111,7 @@ function PracticePageContent() {
     if (isSubmitting || currentIndex >= items.length) return
 
     const currentItem = items[currentIndex]
-    const timeMs = Date.now() - startTime
+    const timeMs = startTime ? Date.now() - startTime : 0
     
     // 乐观更新：立即移动到下一题
     const nextIndex = currentIndex + 1
@@ -113,7 +120,6 @@ function PracticePageContent() {
     if (!isLastItem) {
       setCurrentIndex(nextIndex)
       setUserAnswer('')
-      setStartTime(Date.now())
       
       // 检查下一题是否是数值题
       setShowNumericalInput(isNumericalQuestion(items[nextIndex].stem.text))
@@ -173,7 +179,10 @@ function PracticePageContent() {
   }, [items, currentIndex, userAnswer, submitAnswer])
 
   // 渲染数学公式
-  const renderMathContent = (content: string) => {
+  const renderMathContent = (content: string | undefined) => {
+    if (!content || typeof content !== 'string') {
+      return '';
+    }
     return content
       .replace(/\$\$(.*?)\$\$/g, '<div class="math-block font-mono text-lg">$1</div>')
       .replace(/\$(.*?)\$/g, '<span class="math-inline font-mono">$1</span>');

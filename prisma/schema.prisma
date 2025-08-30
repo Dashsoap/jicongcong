@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -63,20 +63,26 @@ model Concept {
   // 关联关系
   items   Item[]
   mastery Mastery[]
+  mappings ItemKnowledgeSkillMap[]
 }
 
 model Item {
   id         String @id @default(cuid())
   conceptId  String
+  parentItemId String? // 关联母题ID
+  itemType   String  @default("variant") // "parent"|"variant"|"independent"
   difficulty Int    @default(0)
   stem       String // JSON string
   solution   String // JSON string
   
   // 关联关系
-  Concept  Concept   @relation(fields: [conceptId], references: [id])
-  attempts Attempt[]
+  Concept    Concept   @relation(fields: [conceptId], references: [id])
+  ParentItem ParentItem? @relation(fields: [parentItemId], references: [id])
+  attempts   Attempt[]
+  mappings   ItemKnowledgeSkillMap[]
   
   @@index([conceptId, difficulty])
+  @@index([parentItemId])
 }
 
 model Attempt {
@@ -98,6 +104,8 @@ model Mastery {
   userId    String
   conceptId String
   theta     Float    @default(0)
+  attempts  Int      @default(0) // 答题次数
+  correct   Int      @default(0) // 正确次数
   updatedAt DateTime @default(now()) @updatedAt
   
   // 关联关系
@@ -164,4 +172,54 @@ model AuditLog {
   detail    String?  // JSON string
   latencyMs Int?
   createdAt DateTime @default(now())
+}
+
+// 母题表：存储500道高频母题
+model ParentItem {
+  id          String @id @default(cuid())
+  code        String @unique // M001, M002...
+  title       String
+  description String?
+  subject     String @default("数学")
+  grade       String @default("高一")
+  difficulty  Int    @default(0)
+  priority    Int    @default(1) // 重要性权重
+  createdAt   DateTime @default(now())
+  
+  // 关联关系
+  variants    Item[] // 变式题
+  mappings    ItemKnowledgeSkillMap[]
+}
+
+// 能力表：存储能力维度
+model Skill {
+  id          String @id @default(cuid())
+  name        String
+  description String?
+  category    String? // "计算能力"、"推理能力"等
+  subject     String @default("数学")
+  
+  // 关联关系
+  mappings    ItemKnowledgeSkillMap[]
+}
+
+// 三元映射表：题目-知识-能力
+model ItemKnowledgeSkillMap {
+  id              String @id @default(cuid())
+  itemId          String? // 变式题ID
+  parentItemId    String? // 母题ID
+  conceptId       String  // 知识点ID
+  skillId         String  // 能力ID
+  knowledgeWeight Float   @default(1.0) // 知识点权重(0-1)
+  skillWeight     Float   @default(1.0) // 能力权重(0-1)
+  
+  // 关联关系
+  Item       Item?       @relation(fields: [itemId], references: [id])
+  ParentItem ParentItem? @relation(fields: [parentItemId], references: [id])
+  Concept    Concept     @relation(fields: [conceptId], references: [id])
+  Skill      Skill       @relation(fields: [skillId], references: [id])
+  
+  @@index([itemId])
+  @@index([parentItemId])
+  @@index([conceptId])
 }

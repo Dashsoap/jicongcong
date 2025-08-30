@@ -2,6 +2,7 @@ import { NextRequest } from 'next/server'
 import { requireAuth } from '@/lib/authz'
 import { AttemptSchema } from '@/lib/schemas'
 import { updateMasteryAfterAttempt } from '@/lib/elo'
+import { updateMasteryWithWeights } from '@/lib/elo-precise'
 import { prisma } from '@/lib/prisma'
 
 // 模拟题目数据，用于获取题目难度
@@ -30,7 +31,10 @@ export async function POST(request: NextRequest) {
     // 从数据库获取题目信息
     const item = await prisma.item.findUnique({
       where: { id: itemId },
-      include: { Concept: true }
+      include: { 
+        Concept: true,
+        ParentItem: true 
+      }
     })
     
     if (!item) {
@@ -111,13 +115,52 @@ export async function POST(request: NextRequest) {
     
     const currentTheta = oldMastery?.theta || 0
     
-    // 更新掌握度
-    const newTheta = await updateMasteryAfterAttempt(
-      user.id, 
-      item.conceptId, 
-      correct, 
-      item.difficulty
-    )
+    // 优先使用精准ELO算法（基于知识点权重）
+    let updateResult
+    if (item.ParentItem || item.parentItemId) {
+      // 使用精准ELO更新
+      updateResult = await updateMasteryWithWeights(
+        user.id,
+        itemId,
+        item.parentItemId || undefined,
+        correct,
+        item.difficulty
+      )
+      
+      console.log(`[精准答题] 用户 ${user.name} 答题结果:`)
+      console.log(`  - 题目: ${itemId} (${item.ParentItem?.title || '独立题目'})`)
+      console.log(`  - 难度: ${item.difficulty}, 结果: ${correct ? '正确' : '错误'}, 用时: ${timeMs}ms`)
+      
+      if (updateResult.success) {
+        updateResult.updates.forEach(update => {
+          console.log(`  - ${update.conceptName}(权重${update.weight}): ${update.oldTheta.toFixed(2)} → ${update.newTheta.toFixed(2)}`)
+        })
+      }
+    } else {
+      // 回退到传统ELO算法
+      const newTheta = await updateMasteryAfterAttempt(
+        user.id, 
+        item.conceptId, 
+        correct, 
+        item.difficulty
+      )
+      
+      updateResult = {
+        success: true,
+        updates: [{
+          conceptId: item.conceptId,
+          conceptName: item.Concept.name,
+          oldTheta: currentTheta,
+          newTheta,
+          weight: 1.0
+        }]
+      }
+      
+      console.log(`[传统答题] 用户 ${user.name} 在概念 ${item.Concept.name} 上的表现:`)
+      console.log(`  - 题目: ${itemId} (难度: ${item.difficulty})`)
+      console.log(`  - 结果: ${correct ? '正确' : '错误'}, 用时: ${timeMs}ms`)
+      console.log(`  - 能力值: ${currentTheta.toFixed(2)} → ${newTheta.toFixed(2)}`)
+    }
     
     // 记录答题记录
     await prisma.attempt.create({
@@ -129,14 +172,14 @@ export async function POST(request: NextRequest) {
       }
     })
     
-    // 计算掌握度变化
-    const deltaTheta = newTheta - currentTheta
+    // 获取主要更新结果（第一个或权重最高的）
+    const primaryUpdate = updateResult.success && updateResult.updates.length > 0
+      ? updateResult.updates.reduce((max, curr) => 
+          curr.weight > max.weight ? curr : max
+        )
+      : { conceptId: item.conceptId, oldTheta: currentTheta, newTheta: currentTheta, weight: 0 }
     
-    console.log(`[Attempt] 用户 ${user.name} 在概念 ${item.Concept.name} 上的表现:`)
-    console.log(`  - 题目: ${itemId} (难度: ${item.difficulty})`)
-    console.log(`  - 结果: ${correct ? '正确' : '错误'}`)
-    console.log(`  - 用时: ${timeMs}ms`)
-    console.log(`  - 能力值: ${currentTheta.toFixed(2)} → ${newTheta.toFixed(2)} (变化: ${deltaTheta > 0 ? '+' : ''}${deltaTheta.toFixed(2)})`)
+    const deltaTheta = primaryUpdate.newTheta - primaryUpdate.oldTheta
     
     // 记录审计日志
     await prisma.auditLog.create({
@@ -148,9 +191,16 @@ export async function POST(request: NextRequest) {
           itemId, 
           correct, 
           timeMs, 
-          conceptId: item.conceptId,
-          oldTheta: currentTheta,
-          newTheta,
+          parentItemId: item.parentItemId,
+          parentItemTitle: item.ParentItem?.title,
+          updateMode: (item.ParentItem || item.parentItemId) ? 'precise' : 'traditional',
+          conceptUpdates: updateResult.updates.length,
+          primaryUpdate: {
+            conceptId: primaryUpdate.conceptId,
+            oldTheta: primaryUpdate.oldTheta,
+            newTheta: primaryUpdate.newTheta,
+            weight: primaryUpdate.weight
+          },
           source: 'database'
         }),
         latencyMs: timeMs
@@ -160,10 +210,22 @@ export async function POST(request: NextRequest) {
     return Response.json({
       ok: true,
       data: {
-        theta: newTheta,
-        previousTheta: currentTheta,
+        // 主要掌握度信息（向后兼容）
+        theta: primaryUpdate.newTheta,
+        previousTheta: primaryUpdate.oldTheta,
         deltaTheta,
-        conceptId: item.conceptId,
+        conceptId: primaryUpdate.conceptId,
+        
+        // 精准ELO的详细结果
+        updateMode: (item.ParentItem || item.parentItemId) ? 'precise' : 'traditional',
+        allUpdates: updateResult.updates,
+        parentItem: item.ParentItem ? {
+          id: item.ParentItem.id,
+          code: item.ParentItem.code,
+          title: item.ParentItem.title
+        } : null,
+        
+        // 基础信息
         itemId,
         correct,
         timeMs,

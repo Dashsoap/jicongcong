@@ -63,6 +63,16 @@ export async function getMastery(userId: string, conceptId: string): Promise<num
  */
 export async function setMastery(userId: string, conceptId: string, theta: number): Promise<void> {
   try {
+    // 获取现有数据以保持attempts和correct字段
+    const existing = await prisma.mastery.findUnique({
+      where: {
+        userId_conceptId: {
+          userId,
+          conceptId
+        }
+      }
+    })
+
     await prisma.mastery.upsert({
       where: {
         userId_conceptId: {
@@ -77,7 +87,9 @@ export async function setMastery(userId: string, conceptId: string, theta: numbe
       create: {
         userId,
         conceptId,
-        theta
+        theta,
+        attempts: 0,
+        correct: 0
       }
     })
   } catch (error) {
@@ -99,11 +111,46 @@ export async function updateMasteryAfterAttempt(
   correct: boolean,
   itemDifficulty: number
 ): Promise<number> {
-  const currentTheta = await getMastery(userId, conceptId)
-  const newTheta = updateTheta(currentTheta, correct, itemDifficulty)
-  await setMastery(userId, conceptId, newTheta)
+  // 获取当前掌握度数据（包含attempts和correct）
+  const currentMastery = await prisma.mastery.findUnique({
+    where: {
+      userId_conceptId: {
+        userId,
+        conceptId
+      }
+    }
+  })
   
-  console.log(`[ELO] 用户 ${userId} 概念 ${conceptId}: ${currentTheta.toFixed(2)} → ${newTheta.toFixed(2)} (${correct ? '正确' : '错误'})`)
+  const currentTheta = currentMastery?.theta || 0
+  const currentAttempts = currentMastery?.attempts || 0
+  const currentCorrect = currentMastery?.correct || 0
+  
+  const newTheta = updateTheta(currentTheta, correct, itemDifficulty)
+  
+  // 更新掌握度数据，包含attempts和correct字段
+  await prisma.mastery.upsert({
+    where: {
+      userId_conceptId: {
+        userId,
+        conceptId
+      }
+    },
+    update: {
+      theta: newTheta,
+      attempts: currentAttempts + 1,
+      correct: currentCorrect + (correct ? 1 : 0),
+      updatedAt: new Date()
+    },
+    create: {
+      userId,
+      conceptId,
+      theta: newTheta,
+      attempts: 1,
+      correct: correct ? 1 : 0
+    }
+  })
+  
+  console.log(`[ELO] 用户 ${userId} 概念 ${conceptId}: ${currentTheta.toFixed(2)} → ${newTheta.toFixed(2)} (${correct ? '正确' : '错误'}) [${currentAttempts + 1}次尝试]`)
   
   return newTheta
 }

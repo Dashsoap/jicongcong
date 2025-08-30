@@ -1,19 +1,17 @@
-import type { Metadata } from "next"
-
-export const metadata: Metadata = {
-  title: 'AI对话'
-}
-
 'use client'
 
 import { useSession, signOut } from 'next-auth/react'
-import { Suspense } from 'react'
+import { Suspense, useEffect } from 'react'
 import Chat from '@/components/Chat'
 import ConversationList from '@/components/ConversationList'
 import { ConversationProvider, useConversation } from '@/components/ConversationContext'
 
 function ChatWithSidebar() {
   const { conversationId, setConversationId } = useConversation()
+
+  useEffect(() => {
+    document.title = 'AI对话 | 岭鹿AI'
+  }, [])
 
   return (
     <div className="h-full flex">

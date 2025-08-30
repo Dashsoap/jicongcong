@@ -1,9 +1,3 @@
-import type { Metadata } from "next"
-
-export const metadata: Metadata = {
-  title: '智能练习'
-}
-
 'use client'
 
 import { useState, useEffect, useCallback, Suspense } from 'react'
@@ -56,6 +50,11 @@ function PracticePageContent() {
   const [showNumericalInput, setShowNumericalInput] = useState(false)
 
   const appName = process.env.NEXT_PUBLIC_APP_NAME || '岭鹿AI'
+
+  // 设置页面标题
+  useEffect(() => {
+    document.title = '智能练习 | 岭鹿AI'
+  }, [])
 
   // 客户端挂载后从 localStorage 恢复设置
   useEffect(() => {

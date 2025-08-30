@@ -1,18 +1,16 @@
-import type { Metadata } from "next"
-
-export const metadata: Metadata = {
-  title: '首页'
-}
-
 'use client'
 
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
-import { Suspense } from 'react'
+import { Suspense, useEffect } from 'react'
 import Header from '@/components/Header'
 
 function HomeContent() {
   const { data: session, status } = useSession()
+
+  useEffect(() => {
+    document.title = '首页 | 岭鹿AI'
+  }, [])
 
   if (status === 'loading') {
     return (

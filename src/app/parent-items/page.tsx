@@ -1,9 +1,3 @@
-import type { Metadata } from "next"
-
-export const metadata: Metadata = {
-  title: '母题系统'
-}
-
 'use client'
 
 import { useState, useEffect } from 'react'
@@ -38,6 +32,10 @@ export default function ParentItemsPage() {
   const [parentItems, setParentItems] = useState<ParentItem[]>([])
   const [loading, setLoading] = useState(true)
   const [mode, setMode] = useState<'weak' | 'all' | 'strong'>('weak')
+
+  useEffect(() => {
+    document.title = '母题系统 | 岭鹿AI'
+  }, [])
 
   useEffect(() => {
     if (status === 'authenticated') {

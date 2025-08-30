@@ -1,9 +1,3 @@
-import type { Metadata } from "next"
-
-export const metadata: Metadata = {
-  title: '登录'
-}
-
 'use client'
 
 import { useState, useEffect, Suspense } from 'react'
@@ -27,6 +21,10 @@ function LoginPageContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const callbackUrl = searchParams.get('callbackUrl') || '/'
+
+  useEffect(() => {
+    document.title = '登录 | 岭鹿AI'
+  }, [])
 
   const {
     register,

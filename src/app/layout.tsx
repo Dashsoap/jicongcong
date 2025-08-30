@@ -15,7 +15,10 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "岭鹿AI - 智能家教系统",
+  title: {
+    template: '%s | 岭鹿AI',
+    default: '岭鹿AI - 智能家教系统'
+  },
   description: "基于 AI 的个性化学习助手，提供智能问答和自适应练习",
   icons: {
     icon: '/icon.png',

@@ -1,3 +1,9 @@
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: 'AI对话'
+}
+
 'use client'
 
 import { useSession, signOut } from 'next-auth/react'

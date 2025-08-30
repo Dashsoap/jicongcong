@@ -15,7 +15,10 @@
       "Bash(git remote:*)",
       "Bash(git push:*)",
       "Read(/Users/mac/Library/Containers/com.wiheads.paste/Data/tmp/images/**)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Read(/Users/mac/Library/Containers/com.wiheads.paste/Data/tmp/images/**)",
+      "Bash(find:*)",
+      "Bash(grep:*)"
     ],
     "deny": [],
     "ask": []

@@ -1,3 +1,9 @@
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: '登录'
+}
+
 'use client'
 
 import { useState, useEffect, Suspense } from 'react'

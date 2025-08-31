@@ -161,76 +161,134 @@ export default function PlacementTestPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 relative overflow-hidden">
+      {/* 科技背景效果 */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.1),transparent_50%)]"></div>
+        <div className="absolute top-0 left-0 w-full h-full">
+          <div className="absolute top-20 left-20 w-72 h-72 bg-cyan-500/10 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute top-40 right-20 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+          <div className="absolute bottom-20 left-1/3 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl animate-pulse delay-2000"></div>
+        </div>
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(59,130,246,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(59,130,246,0.03)_1px,transparent_1px)] bg-[size:50px_50px]"></div>
+      </div>
+      
       <Header />
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {testPhase === 'intro' && (
-          <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12">
-            <div className="text-center">
-              <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-blue-100 mb-6">
-                <span className="text-2xl">🎯</span>
+          <div className="relative bg-gray-800/50 backdrop-blur-md border border-gray-700/50 rounded-3xl shadow-2xl p-8 md:p-12">
+            <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 to-purple-500/5 rounded-3xl"></div>
+            <div className="relative text-center">
+              <div className="mx-auto flex items-center justify-center h-20 w-20 rounded-2xl bg-gradient-to-r from-cyan-400 to-blue-500 mb-8 shadow-lg shadow-cyan-500/20">
+                <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                </svg>
               </div>
               
-              <h1 className="text-3xl font-bold text-gray-900 mb-4">
-                欢迎来到数学摸底考试
+              <h1 className="text-4xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent mb-6">
+                AI智能摸底考试
               </h1>
               
-              <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-                为了给您提供最合适的学习内容，我们需要了解您的数学基础。
-                这个摸底考试将帮助我们为您推荐最适合的母题和练习。
+              <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
+                基于先进算法的个性化能力评估系统，精准分析您的数学基础，
+                为您量身定制最优学习路径和精准题目推荐。
               </p>
 
-              <div className="bg-blue-50 rounded-xl p-6 mb-8">
-                <h3 className="text-lg font-semibold text-blue-900 mb-4">考试说明</h3>
-                <div className="text-left space-y-2 text-blue-800">
+              <div className="bg-gray-700/30 border border-gray-600/30 rounded-2xl p-8 mb-10">
+                <h3 className="text-2xl font-semibold text-white mb-6 flex items-center">
+                  <div className="w-8 h-8 bg-cyan-400 rounded-lg flex items-center justify-center mr-3">
+                    <svg className="w-5 h-5 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  智能评估说明
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="flex items-start">
-                    <span className="inline-block w-6 h-6 bg-blue-200 rounded-full text-center text-sm font-medium mr-3 mt-0.5">1</span>
-                    <span>本次考试共 {items.length} 道题，涵盖高一数学的主要知识点</span>
+                    <div className="w-8 h-8 bg-cyan-500/20 rounded-xl flex items-center justify-center mr-4 mt-1">
+                      <span className="text-cyan-400 font-bold">1</span>
+                    </div>
+                    <div>
+                      <h4 className="text-cyan-400 font-medium mb-1">题目数量</h4>
+                      <p className="text-gray-300 text-sm">共 {items.length} 道精选题目，覆盖核心知识点</p>
+                    </div>
                   </div>
                   <div className="flex items-start">
-                    <span className="inline-block w-6 h-6 bg-blue-200 rounded-full text-center text-sm font-medium mr-3 mt-0.5">2</span>
-                    <span>请根据您的实际水平作答，不要查阅资料</span>
+                    <div className="w-8 h-8 bg-blue-500/20 rounded-xl flex items-center justify-center mr-4 mt-1">
+                      <span className="text-blue-400 font-bold">2</span>
+                    </div>
+                    <div>
+                      <h4 className="text-blue-400 font-medium mb-1">诚信作答</h4>
+                      <p className="text-gray-300 text-sm">请根据真实水平作答，确保评估准确性</p>
+                    </div>
                   </div>
                   <div className="flex items-start">
-                    <span className="inline-block w-6 h-6 bg-blue-200 rounded-full text-center text-sm font-medium mr-3 mt-0.5">3</span>
-                    <span>如果不会做某道题，可以留空或者填写&quot;不会&quot;</span>
+                    <div className="w-8 h-8 bg-purple-500/20 rounded-xl flex items-center justify-center mr-4 mt-1">
+                      <span className="text-purple-400 font-bold">3</span>
+                    </div>
+                    <div>
+                      <h4 className="text-purple-400 font-medium mb-1">答题提示</h4>
+                      <p className="text-gray-300 text-sm">不确定的题目可留空或填写"不会"</p>
+                    </div>
                   </div>
                   <div className="flex items-start">
-                    <span className="inline-block w-6 h-6 bg-blue-200 rounded-full text-center text-sm font-medium mr-3 mt-0.5">4</span>
-                    <span>考试结果将用于为您个性化推荐学习内容</span>
+                    <div className="w-8 h-8 bg-emerald-500/20 rounded-xl flex items-center justify-center mr-4 mt-1">
+                      <span className="text-emerald-400 font-bold">4</span>
+                    </div>
+                    <div>
+                      <h4 className="text-emerald-400 font-medium mb-1">个性推荐</h4>
+                      <p className="text-gray-300 text-sm">基于结果生成专属学习路径</p>
+                    </div>
                   </div>
                 </div>
               </div>
 
               <button
                 onClick={startTest}
-                className="inline-flex items-center px-8 py-3 bg-blue-600 text-white text-lg font-medium rounded-xl hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl"
+                className="group relative inline-flex items-center px-10 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-lg font-semibold rounded-2xl hover:shadow-2xl hover:shadow-cyan-500/25 transition-all duration-300 hover:-translate-y-1 border border-cyan-400/20"
               >
-                开始摸底考试
-                <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                </svg>
+                <div className="absolute inset-0 bg-white/5 rounded-2xl group-hover:bg-white/10 transition-colors"></div>
+                <span className="relative flex items-center">
+                  开始智能评估
+                  <svg className="ml-3 w-6 h-6 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
+                </span>
               </button>
             </div>
           </div>
         )}
 
         {testPhase === 'testing' && items.length > 0 && (
-          <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+          <div className="relative bg-gray-800/50 backdrop-blur-md border border-gray-700/50 rounded-3xl shadow-2xl overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 to-purple-500/5 rounded-3xl"></div>
             {/* 进度条 */}
-            <div className="bg-gray-50 px-8 py-4">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-medium text-gray-700">
-                  题目 {currentIndex + 1} / {items.length}
-                </span>
-                <span className="text-sm text-gray-500">
-                  {items[currentIndex].conceptName}
-                </span>
+            <div className="relative bg-gray-900/30 px-8 py-6 border-b border-gray-700/50">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center">
+                  <div className="w-10 h-10 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-xl flex items-center justify-center mr-4">
+                    <span className="text-white font-bold">{currentIndex + 1}</span>
+                  </div>
+                  <div>
+                    <span className="text-lg font-semibold text-white">
+                      第 {currentIndex + 1} 题 / 共 {items.length} 题
+                    </span>
+                    <div className="text-sm text-gray-400 mt-1">
+                      {items[currentIndex].conceptName} · 难度 {items[currentIndex].difficulty}
+                    </div>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="text-2xl font-bold text-cyan-400">
+                    {Math.round(((currentIndex + 1) / items.length) * 100)}%
+                  </div>
+                  <div className="text-xs text-gray-400">完成进度</div>
+                </div>
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
+              <div className="w-full bg-gray-700/50 rounded-full h-3 overflow-hidden">
                 <div 
-                  className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                  className="bg-gradient-to-r from-cyan-400 to-blue-500 h-3 rounded-full transition-all duration-500 shadow-lg shadow-cyan-500/20"
                   style={{ width: `${((currentIndex + 1) / items.length) * 100}%` }}
                 />
               </div>

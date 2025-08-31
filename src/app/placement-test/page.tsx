@@ -249,7 +249,7 @@ export default function PlacementTestPage() {
                       </div>
                       <div>
                         <h4 className="text-purple-300 font-bold mb-2 text-lg">答题提示</h4>
-                        <p className="text-gray-300">不确定的题目可留空或填写"不会"，这有助于准确评估</p>
+                        <p className="text-gray-300">不确定的题目可留空或填写&quot;不会&quot;，这有助于准确评估</p>
                       </div>
                     </div>
                   </div>
@@ -390,7 +390,7 @@ export default function PlacementTestPage() {
                     </div>
                     <div>
                       <h4 className="text-white font-bold text-lg">您的答案</h4>
-                      <p className="text-gray-300 text-sm">请输入您的答案，如不确定可填写"不会"</p>
+                      <p className="text-gray-300 text-sm">请输入您的答案，如不确定可填写&quot;不会&quot;</p>
                     </div>
                   </div>
                   

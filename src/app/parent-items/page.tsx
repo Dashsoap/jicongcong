@@ -118,39 +118,49 @@ export default function ParentItemsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
+    <div className="min-h-screen bg-gradient-primary relative overflow-hidden">
+      {/* 科技感背景效果 */}
+      <div className="absolute inset-0">
+        <div className="absolute top-0 left-0 w-full h-full">
+          <div className="absolute top-20 left-20 w-64 h-64 bg-gradient-to-br from-emerald-400/20 to-teal-500/20 rounded-full blur-3xl animate-float"></div>
+          <div className="absolute top-40 right-20 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-purple-500/20 rounded-full blur-3xl animate-float" style={{animationDelay: '2s'}}></div>
+          <div className="absolute bottom-32 left-1/3 w-72 h-72 bg-gradient-to-br from-orange-400/20 to-red-500/20 rounded-full blur-3xl animate-float" style={{animationDelay: '4s'}}></div>
+        </div>
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(59,130,246,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(59,130,246,0.03)_1px,transparent_1px)] bg-[size:50px_50px]"></div>
+      </div>
+      
       <Header currentPage="parent-items" />
 
-      <div className="max-w-7xl mx-auto p-6">
+      <div className="relative z-10 max-w-7xl mx-auto p-6">
         {/* 摸底考试提示 */}
         {showPlacementPrompt && (
-          <div className="bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl shadow-xl p-6 mb-8 text-white">
+          <div className="bg-gradient-to-r from-orange-500/90 to-red-500/90 backdrop-blur-sm border border-white/20 rounded-3xl shadow-2xl p-6 mb-8 text-white animate-slide-up">
             <div className="flex items-center justify-between">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-                    <span className="text-2xl">🚀</span>
+                  <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center animate-bounce">
+                    <div className="text-3xl">🚀</div>
                   </div>
                 </div>
-                <div className="ml-4">
-                  <h3 className="text-lg font-semibold">开启个性化学习</h3>
-                  <p className="text-orange-100">
-                    完成摸底考试后，我们将为您推荐最适合的母题和学习路径
+                <div className="ml-6">
+                  <h3 className="text-xl font-bold mb-2">开启个性化学习之旅</h3>
+                  <p className="text-white/90 text-lg">
+                    完成AI摸底考试后，我们将为您推荐最适合的母题和学习路径
                   </p>
                 </div>
               </div>
-              <div className="flex space-x-3">
+              <div className="flex space-x-4">
                 <button
                   onClick={() => setShowPlacementPrompt(false)}
-                  className="text-white/80 hover:text-white transition-colors"
+                  className="text-white/70 hover:text-white transition-colors p-2 hover:bg-white/10 rounded-xl"
                 >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </button>
                 <button
                   onClick={() => router.push('/placement-test')}
-                  className="bg-white text-orange-600 px-4 py-2 rounded-lg font-medium hover:bg-orange-50 transition-colors"
+                  className="bg-white text-orange-600 px-6 py-3 rounded-2xl font-bold hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300"
                 >
                   开始摸底考试
                 </button>
@@ -159,77 +169,115 @@ export default function ParentItemsPage() {
           </div>
         )}
 
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4 flex items-center">
-            <span className="text-5xl mr-4">🎯</span>
-            高一数学母题系统
-          </h1>
-          <p className="text-xl text-gray-600 max-w-3xl">
-            基于您的学习数据智能推荐，每道母题都精准匹配您的学习需求
-          </p>
+        <div className="mb-12 animate-slide-up">
+          <div className="text-center mb-8">
+            <div className="inline-block px-6 py-3 bg-gradient-to-r from-emerald-500/10 to-orange-500/10 rounded-full border border-emerald-200/50 mb-6">
+              <span className="text-emerald-600 font-semibold">智能推荐系统</span>
+            </div>
+            <h1 className="text-5xl md:text-6xl font-black text-gray-900 mb-6 flex items-center justify-center">
+              <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl flex items-center justify-center mr-6 shadow-xl animate-pulse-glow">
+                <span className="text-3xl">🎯</span>
+              </div>
+              高一数学母题系统
+            </h1>
+            <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+              基于先进AI算法和您的学习数据智能推荐，每道母题都经过精心筛选，精准匹配您的学习需求和能力水平
+            </p>
+          </div>
         </div>
 
         {/* 模式选择 */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-          {[
-            { 
-              key: 'weak', 
-              label: '薄弱概念推荐', 
-              desc: '基于你的薄弱知识点',
-              icon: '🔍',
-              color: 'from-red-500 to-pink-500'
-            },
-            { 
-              key: 'all', 
-              label: '综合推荐', 
-              desc: '全面覆盖所有知识点',
-              icon: '📊',
-              color: 'from-blue-500 to-purple-500'
-            },
-            { 
-              key: 'strong', 
-              label: '挑战模式', 
-              desc: '高难度提升题目',
-              icon: '🚀',
-              color: 'from-green-500 to-teal-500'
-            }
-          ].map(({ key, label, desc, icon, color }) => (
-            <button
-              key={key}
-              onClick={() => setMode(key as typeof mode)}
-              className={`relative overflow-hidden rounded-2xl border-2 transition-all duration-300 ${
-                mode === key
-                  ? 'border-white shadow-2xl scale-105'
-                  : 'border-gray-200 hover:border-gray-300 hover:shadow-lg'
-              }`}
-            >
-              <div className={`bg-gradient-to-br ${color} p-6 text-white ${
-                mode === key ? 'opacity-100' : 'opacity-80 hover:opacity-90'
-              }`}>
-                <div className="text-3xl mb-3">{icon}</div>
-                <div className="font-bold text-lg mb-2">{label}</div>
-                <div className="text-sm opacity-90">{desc}</div>
-              </div>
-              {mode === key && (
-                <div className="absolute top-2 right-2">
-                  <div className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center">
-                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
+        <div className="mb-12">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">选择学习模式</h2>
+            <p className="text-gray-600">根据您的学习目标和当前水平，选择最适合的推荐模式</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              { 
+                key: 'weak', 
+                label: '薄弱概念推荐', 
+                desc: '基于AI分析的薄弱知识点，针对性提升',
+                icon: (
+                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364-.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                  </svg>
+                ),
+                color: 'from-red-500 to-pink-500',
+                bgColor: 'from-red-50 to-pink-50'
+              },
+              { 
+                key: 'all', 
+                label: '综合推荐', 
+                desc: '全面覆盖所有知识点，系统性学习',
+                icon: (
+                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                  </svg>
+                ),
+                color: 'from-blue-500 to-purple-500',
+                bgColor: 'from-blue-50 to-purple-50'
+              },
+              { 
+                key: 'strong', 
+                label: '挑战模式', 
+                desc: '高难度提升题目，突破能力极限',
+                icon: (
+                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                ),
+                color: 'from-emerald-500 to-teal-500',
+                bgColor: 'from-emerald-50 to-teal-50'
+              }
+            ].map(({ key, label, desc, icon, color, bgColor }) => (
+              <button
+                key={key}
+                onClick={() => setMode(key as typeof mode)}
+                className={`group relative overflow-hidden rounded-3xl border-2 transition-all duration-500 transform hover:-translate-y-2 hover:shadow-2xl ${
+                  mode === key
+                    ? 'border-white shadow-2xl scale-105 bg-white' 
+                    : 'border-white/50 hover:border-white bg-white/80 backdrop-blur-sm'
+                }`}
+              >
+                <div className={`relative p-8 ${mode === key ? '' : 'group-hover:bg-white/90'} transition-all duration-300`}>
+                  <div className={`absolute inset-0 bg-gradient-to-br ${bgColor} opacity-50 transition-opacity duration-300 ${mode === key ? 'opacity-100' : 'group-hover:opacity-70'}`}></div>
+                  
+                  <div className="relative z-10">
+                    <div className={`w-16 h-16 bg-gradient-to-br ${color} rounded-2xl flex items-center justify-center mb-6 shadow-xl group-hover:scale-110 transition-transform duration-300`}>
+                      <div className="text-white">
+                        {icon}
+                      </div>
+                    </div>
+                    
+                    <h3 className="font-bold text-xl text-gray-900 mb-3">{label}</h3>
+                    <p className="text-gray-600 text-sm leading-relaxed">{desc}</p>
+                    
+                    {mode === key && (
+                      <div className="absolute top-4 right-4 animate-slide-up">
+                        <div className={`w-8 h-8 bg-gradient-to-r ${color} rounded-full flex items-center justify-center shadow-lg`}>
+                          <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                          </svg>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
-              )}
-            </button>
-          ))}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* 母题列表 */}
         {loading ? (
-          <div className="text-center py-16">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+          <div className="text-center py-20">
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full mb-6 animate-pulse-glow">
+              <div className="animate-spin rounded-full h-10 w-10 border-4 border-white border-t-transparent"></div>
             </div>
-            <p className="text-lg text-gray-600">正在为您精选母题...</p>
+            <div className="text-xl text-gray-900 font-bold mb-2">正在为您精选母题...</div>
+            <div className="text-gray-600">AI正在分析您的学习数据</div>
           </div>
         ) : (
           <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">

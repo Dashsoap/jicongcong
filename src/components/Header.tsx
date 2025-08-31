@@ -132,7 +132,12 @@ export default function Header({ currentPage }: HeaderProps = {}) {
           {/* 中间 - 当前页面指示器 */}
           {currentItem && (
             <div className="hidden md:flex items-center">
-              <div className={`flex items-center px-4 py-2 rounded-full bg-gradient-to-r ${currentItem.color} text-white shadow-lg`}>
+              <div 
+                className="flex items-center px-4 py-2 rounded-full text-white shadow-lg"
+                style={{
+                  background: `linear-gradient(135deg, ${currentItem.color.replace('from-', '').replace(' to-', ', ')})`
+                }}
+              >
                 <div className="mr-2">
                   {currentItem.icon}
                 </div>

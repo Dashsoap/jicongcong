@@ -174,13 +174,13 @@ export default function ParentItemsPage() {
             <div className="inline-block px-6 py-3 bg-gradient-to-r from-emerald-500/10 to-orange-500/10 rounded-full border border-emerald-200/50 mb-6">
               <span className="text-emerald-600 font-semibold">智能推荐系统</span>
             </div>
-            <h1 className="text-5xl md:text-6xl font-black text-gray-900 mb-6 flex items-center justify-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl flex items-center justify-center mr-6 shadow-xl animate-pulse-glow">
-                <span className="text-3xl">🎯</span>
+            <h1 className="text-3xl md:text-4xl font-black text-gray-900 mb-6 flex items-center justify-center">
+              <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl flex items-center justify-center mr-4 shadow-xl animate-pulse-glow">
+                <span className="text-2xl">🎯</span>
               </div>
               高一数学母题系统
             </h1>
-            <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+            <p className="text-lg text-gray-600 max-w-4xl mx-auto leading-relaxed">
               基于先进AI算法和您的学习数据智能推荐，每道母题都经过精心筛选，精准匹配您的学习需求和能力水平
             </p>
           </div>
@@ -189,7 +189,7 @@ export default function ParentItemsPage() {
         {/* 模式选择 */}
         <div className="mb-12">
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">选择学习模式</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">选择学习模式</h2>
             <p className="text-gray-600">根据您的学习目标和当前水平，选择最适合的推荐模式</p>
           </div>
           
@@ -251,7 +251,7 @@ export default function ParentItemsPage() {
                       </div>
                     </div>
                     
-                    <h3 className="font-bold text-xl text-gray-900 mb-3">{label}</h3>
+                    <h3 className="font-bold text-lg text-gray-900 mb-3">{label}</h3>
                     <p className="text-gray-600 text-sm leading-relaxed">{desc}</p>
                     
                     {mode === key && (

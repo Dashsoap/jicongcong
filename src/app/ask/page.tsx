@@ -76,8 +76,8 @@ function AskPageContent() {
                 </svg>
               </div>
               <div>
-                <h2 className="text-4xl font-black mb-2">AI 智能问答</h2>
-                <p className="text-white/90 text-lg">
+                <h2 className="text-3xl font-black mb-2">AI 智能问答</h2>
+                <p className="text-white/90">
                   24/7智能助教，向我提问任何学习相关的问题，我会根据您的年级和学科提供个性化的解答
                 </p>
               </div>
@@ -99,7 +99,7 @@ function AskPageContent() {
               <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
                 <span className="text-white font-bold text-lg">1</span>
               </div>
-              <h3 className="ml-4 font-bold text-gray-900 text-xl">选择学科年级</h3>
+              <h3 className="ml-4 font-bold text-gray-900">选择学科年级</h3>
             </div>
             <p className="text-gray-600 leading-relaxed">
               先选择合适的学科和年级，这样AI能够提供更加精准和个性化的解答
@@ -111,7 +111,7 @@ function AskPageContent() {
               <div className="w-12 h-12 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
                 <span className="text-white font-bold text-lg">2</span>
               </div>
-              <h3 className="ml-4 font-bold text-gray-900 text-xl">提出问题</h3>
+              <h3 className="ml-4 font-bold text-gray-900">提出问题</h3>
             </div>
             <p className="text-gray-600 leading-relaxed">
               输入您的问题，支持数学公式和复杂概念的询问，AI会实时理解并回答
@@ -123,7 +123,7 @@ function AskPageContent() {
               <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
                 <span className="text-white font-bold text-lg">3</span>
               </div>
-              <h3 className="ml-4 font-bold text-gray-900 text-xl">获得解答</h3>
+              <h3 className="ml-4 font-bold text-gray-900">获得解答</h3>
             </div>
             <p className="text-gray-600 leading-relaxed">
               AI会实时流式回答，提供详细的解释和步骤，帮助您深入理解

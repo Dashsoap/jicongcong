@@ -197,19 +197,19 @@ export default function PlacementTestPage() {
                 <span className="text-cyan-300 font-semibold">智能评估系统</span>
               </div>
               
-              <h1 className="text-5xl md:text-6xl font-black mb-6">
+              <h1 className="text-3xl md:text-4xl font-black mb-6">
                 <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent">
                   AI智能摸底考试
                 </span>
               </h1>
               
-              <p className="text-xl text-gray-300 mb-10 max-w-3xl mx-auto leading-relaxed">
+              <p className="text-lg text-gray-300 mb-10 max-w-3xl mx-auto leading-relaxed">
                 基于先进θ算法的个性化能力评估系统，精准分析您的数学基础，
                 为您量身定制最优学习路径和精准题目推荐。开启智能学习新篇章。
               </p>
 
               <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8 mb-10">
-                <h3 className="text-2xl font-bold text-white mb-8 flex items-center justify-center">
+                <h3 className="text-xl font-bold text-white mb-8 flex items-center justify-center">
                   <div className="w-10 h-10 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-2xl flex items-center justify-center mr-4 shadow-lg">
                     <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -224,7 +224,7 @@ export default function PlacementTestPage() {
                         <span className="text-white font-bold text-lg">1</span>
                       </div>
                       <div>
-                        <h4 className="text-cyan-300 font-bold mb-2 text-lg">题目数量</h4>
+                        <h4 className="text-cyan-300 font-bold mb-2">题目数量</h4>
                         <p className="text-gray-300">共 {items.length} 道精选题目，覆盖核心知识点，科学评估能力水平</p>
                       </div>
                     </div>
@@ -236,7 +236,7 @@ export default function PlacementTestPage() {
                         <span className="text-white font-bold text-lg">2</span>
                       </div>
                       <div>
-                        <h4 className="text-blue-300 font-bold mb-2 text-lg">诚信作答</h4>
+                        <h4 className="text-blue-300 font-bold mb-2">诚信作答</h4>
                         <p className="text-gray-300">请根据真实水平作答，确保AI算法能够精准评估您的能力</p>
                       </div>
                     </div>
@@ -248,7 +248,7 @@ export default function PlacementTestPage() {
                         <span className="text-white font-bold text-lg">3</span>
                       </div>
                       <div>
-                        <h4 className="text-purple-300 font-bold mb-2 text-lg">答题提示</h4>
+                        <h4 className="text-purple-300 font-bold mb-2">答题提示</h4>
                         <p className="text-gray-300">不确定的题目可留空或填写&quot;不会&quot;，这有助于准确评估</p>
                       </div>
                     </div>
@@ -260,7 +260,7 @@ export default function PlacementTestPage() {
                         <span className="text-white font-bold text-lg">4</span>
                       </div>
                       <div>
-                        <h4 className="text-emerald-300 font-bold mb-2 text-lg">个性推荐</h4>
+                        <h4 className="text-emerald-300 font-bold mb-2">个性推荐</h4>
                         <p className="text-gray-300">基于θ值计算生成专属学习路径和推荐方案</p>
                       </div>
                     </div>

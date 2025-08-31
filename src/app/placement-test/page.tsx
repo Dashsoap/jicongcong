@@ -194,7 +194,7 @@ export default function PlacementTestPage() {
                   </div>
                   <div className="flex items-start">
                     <span className="inline-block w-6 h-6 bg-blue-200 rounded-full text-center text-sm font-medium mr-3 mt-0.5">3</span>
-                    <span>如果不会做某道题，可以留空或者填写"不会"</span>
+                    <span>如果不会做某道题，可以留空或者填写&quot;不会&quot;</span>
                   </div>
                   <div className="flex items-start">
                     <span className="inline-block w-6 h-6 bg-blue-200 rounded-full text-center text-sm font-medium mr-3 mt-0.5">4</span>

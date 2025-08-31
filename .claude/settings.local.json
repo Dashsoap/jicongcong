@@ -20,7 +20,9 @@
       "Bash(find:*)",
       "Bash(grep:*)",
       "Read(/Users/mac/Library/Containers/com.wiheads.paste/Data/tmp/images/**)",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "Bash(ping:*)",
+      "Bash(ssh:*)"
     ],
     "deny": [],
     "ask": []

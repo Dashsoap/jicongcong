@@ -22,6 +22,7 @@ export default function Header({ currentPage }: HeaderProps = {}) {
     if (pathname.startsWith('/ask')) return 'ask'
     if (pathname.startsWith('/practice')) return 'practice'
     if (pathname.startsWith('/parent-items')) return 'parent-items'
+    if (pathname.startsWith('/placement-test')) return 'placement-test'
     if (pathname.startsWith('/teacher')) return 'teacher'
     
     return 'home'
@@ -33,7 +34,8 @@ export default function Header({ currentPage }: HeaderProps = {}) {
     { key: 'home', label: '首页', href: '/' },
     { key: 'ask', label: 'AI问答', href: '/ask' },
     { key: 'practice', label: '智能练习', href: '/practice' },
-    { key: 'parent-items', label: '母题系统', href: '/parent-items' }
+    { key: 'parent-items', label: '母题系统', href: '/parent-items' },
+    { key: 'placement-test', label: '摸底考试', href: '/placement-test' }
   ]
 
   const getPageBadge = () => {
@@ -42,6 +44,7 @@ export default function Header({ currentPage }: HeaderProps = {}) {
       'ask': { label: 'AI问答', color: 'bg-purple-100 text-purple-800' },
       'practice': { label: '智能练习', color: 'bg-orange-100 text-orange-800' },
       'parent-items': { label: '母题系统', color: 'bg-green-100 text-green-800' },
+      'placement-test': { label: '摸底考试', color: 'bg-indigo-100 text-indigo-800' },
       'teacher': { label: '教师控制台', color: 'bg-red-100 text-red-800' }
     }
     

@@ -229,7 +229,7 @@ export default function PlacementTestPage() {
                     </div>
                     <div>
                       <h4 className="text-purple-400 font-medium mb-1">答题提示</h4>
-                      <p className="text-gray-300 text-sm">不确定的题目可留空或填写"不会"</p>
+                      <p className="text-gray-300 text-sm">不确定的题目可留空或填写&quot;不会&quot;</p>
                     </div>
                   </div>
                   <div className="flex items-start">
@@ -315,7 +315,7 @@ export default function PlacementTestPage() {
                     type="text"
                     value={answers[items[currentIndex].id] || ''}
                     onChange={(e) => handleAnswerChange(e.target.value)}
-                    placeholder='请输入您的答案（如不会可填写"不会"）'
+                    placeholder="请输入您的答案（如不会可填写&quot;不会&quot;）"
                     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg"
                   />
                 </div>

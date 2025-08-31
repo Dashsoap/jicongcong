@@ -257,7 +257,7 @@ export default function PlacementTestPage() {
                     type="text"
                     value={answers[items[currentIndex].id] || ''}
                     onChange={(e) => handleAnswerChange(e.target.value)}
-                    placeholder="请输入您的答案（如不会可填写"不会"）"
+                    placeholder='请输入您的答案（如不会可填写"不会"）'
                     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg"
                   />
                 </div>

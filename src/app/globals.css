@@ -240,6 +240,40 @@ body {
   color: var(--primary-700);
 }
 
+/* MathJax 数学公式样式优化 */
+.math-content .MathJax {
+  font-size: 1.2em !important;
+  line-height: 1.5 !important;
+}
+
+.math-content .MathJax_Display {
+  margin: 1em 0 !important;
+  padding: 0.8em !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-radius: 12px !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+}
+
+.math-content .MathJax_CHTML {
+  color: inherit !important;
+}
+
+/* 练习页面数学公式特殊样式 */
+.practice-math .MathJax_Display {
+  background: rgba(255, 255, 255, 0.15) !important;
+  border: 2px solid rgba(16, 185, 129, 0.3) !important;
+  box-shadow: 0 8px 16px rgba(16, 185, 129, 0.1) !important;
+}
+
+/* 消息气泡中的数学公式 */
+.message-math .MathJax_Display {
+  background: rgba(0, 0, 0, 0.05) !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  margin: 0.5em 0 !important;
+  padding: 0.5em !important;
+}
+
 /* 滚动条样式 */
 ::-webkit-scrollbar {
   width: 8px;

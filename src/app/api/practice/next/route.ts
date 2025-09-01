@@ -8,8 +8,8 @@ const mockItems = [
   {
     id: 'math-001',
     stem: {
-      text: '计算: $\\frac{2x + 3}{x - 1} = 5$ 时，$x$ 的值是多少？',
-      latex: '\\frac{2x + 3}{x - 1} = 5'
+      text: '解不等式组：$$\\begin{cases} x + 1 > 0 \\\\ 2x - 3 < 5 \\end{cases}$$',
+      latex: '\\begin{cases} x + 1 > 0 \\\\ 2x - 3 < 5 \\end{cases}'
     },
     difficulty: -1,
     conceptId: 'algebra-equations',
@@ -18,7 +18,8 @@ const mockItems = [
   {
     id: 'math-002',
     stem: {
-      text: '一个圆的半径是 5cm，求其面积。（π ≈ 3.14）',
+      text: '已知函数 $f(x) = 2x^2 - 4x + 1$，求函数的最小值。',
+      latex: 'f(x) = 2x^2 - 4x + 1'
     },
     difficulty: 0,
     conceptId: 'geometry-circle',
@@ -27,8 +28,8 @@ const mockItems = [
   {
     id: 'physics-001',
     stem: {
-      text: '一个物体从静止开始以 $2 m/s^2$ 的加速度运动，3秒后的速度是多少？',
-      latex: '2 m/s^2'
+      text: '一个物体从静止开始以 $a = 2 \\text{m/s}^2$ 的加速度运动，3秒后的速度是多少？',
+      latex: 'a = 2 \\text{m/s}^2'
     },
     difficulty: 1,
     conceptId: 'mechanics-motion',
@@ -37,8 +38,8 @@ const mockItems = [
   {
     id: 'math-003',
     stem: {
-      text: '解不等式: $2x - 3 > 7$',
-      latex: '2x - 3 > 7'
+      text: '解方程：$\\frac{x+1}{x-2} = \\frac{3}{4}$',
+      latex: '\\frac{x+1}{x-2} = \\frac{3}{4}'
     },
     difficulty: -0.5,
     conceptId: 'algebra-inequalities',
@@ -47,7 +48,8 @@ const mockItems = [
   {
     id: 'physics-002',
     stem: {
-      text: '牛顿第二定律的数学表达式是什么？请解释各个变量的含义。',
+      text: '根据牛顿第二定律 $F = ma$，如果物体质量为 2kg，加速度为 $3 \\text{m/s}^2$，求作用力大小。',
+      latex: 'F = ma'
     },
     difficulty: 0.5,
     conceptId: 'mechanics-laws',
@@ -56,8 +58,8 @@ const mockItems = [
   {
     id: 'math-004',
     stem: {
-      text: '函数 $f(x) = x^2 - 4x + 3$ 的最小值是多少？',
-      latex: 'f(x) = x^2 - 4x + 3'
+      text: '求函数 $y = x^3 - 6x^2 + 9x + 1$ 在区间 $[0, 4]$ 上的最大值和最小值。',
+      latex: 'y = x^3 - 6x^2 + 9x + 1'
     },
     difficulty: 1.5,
     conceptId: 'functions-quadratic',
@@ -66,7 +68,8 @@ const mockItems = [
   {
     id: 'chemistry-001',
     stem: {
-      text: '水分子的化学式是什么？它包含几个原子？',
+      text: '完成化学方程式的配平：$\\ce{C2H6 + O2 -> CO2 + H2O}$',
+      latex: '\\ce{C2H6 + O2 -> CO2 + H2O}'
     },
     difficulty: -1.5,
     conceptId: 'basic-chemistry',
@@ -75,8 +78,8 @@ const mockItems = [
   {
     id: 'math-005',
     stem: {
-      text: '计算 $\\sin(30°) + \\cos(60°)$ 的值',
-      latex: '\\sin(30°) + \\cos(60°)'
+      text: '已知 $\\sin\\alpha = \\frac{3}{5}$，且 $\\alpha$ 为锐角，求 $\\cos\\alpha$ 和 $\\tan\\alpha$ 的值。',
+      latex: '\\sin\\alpha = \\frac{3}{5}'
     },
     difficulty: 0.8,
     conceptId: 'trigonometry-basic',

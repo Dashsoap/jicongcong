@@ -445,66 +445,86 @@ function PracticePageContent() {
             </div>
           ) : currentItem ? (
             /* 练习题 */
-            <div className="p-8">
+            <div className="p-8 md:p-12">
               {/* 题目头部信息 */}
-              <div className="mb-6">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center space-x-3">
-                    <span className="text-lg font-semibold text-gray-800">
-                      第 {currentIndex + 1} 题
-                    </span>
-                    <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">
-                      {currentItem.subject}
-                    </span>
+              <div className="mb-8">
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center space-x-4">
+                    <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
+                      <span className="text-white font-bold text-lg">{currentIndex + 1}</span>
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-white">第 {currentIndex + 1} 题</h3>
+                      <div className="flex items-center space-x-2 mt-1">
+                        <span className="px-3 py-1 bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-400/30 text-blue-300 rounded-full text-sm font-medium">
+                          {currentItem.subject}
+                        </span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex items-center space-x-2">
-                    <span className="text-sm text-gray-500">难度:</span>
-                    <span className={`px-2 py-1 rounded text-sm font-medium ${
-                      currentItem.difficulty <= -1 ? 'bg-green-100 text-green-700' :
-                      currentItem.difficulty <= 0 ? 'bg-yellow-100 text-yellow-700' :
-                      currentItem.difficulty <= 1 ? 'bg-orange-100 text-orange-700' :
-                      'bg-red-100 text-red-700'
+                  <div className="text-right">
+                    <div className="text-sm text-gray-300 mb-1">难度等级</div>
+                    <div className={`px-4 py-2 rounded-2xl font-bold shadow-lg ${
+                      currentItem.difficulty <= -1 ? 'bg-gradient-to-r from-emerald-400 to-teal-500 text-white' :
+                      currentItem.difficulty <= 0 ? 'bg-gradient-to-r from-yellow-400 to-orange-500 text-white' :
+                      currentItem.difficulty <= 1 ? 'bg-gradient-to-r from-orange-400 to-red-500 text-white' :
+                      'bg-gradient-to-r from-red-500 to-pink-600 text-white'
                     }`}>
                       {currentItem.difficulty > 0 ? '+' : ''}{currentItem.difficulty.toFixed(1)}
-                    </span>
+                    </div>
                   </div>
                 </div>
               </div>
 
               {/* 题目内容 */}
-              <div className="mb-8">
-                <div className="bg-gray-50 rounded-lg p-6 border-l-4 border-blue-500">
-                  <div 
-                    className="text-lg leading-relaxed text-gray-800"
-                    dangerouslySetInnerHTML={{ 
-                      __html: renderMathContent(currentItem.stem.text) 
-                    }}
-                  />
+              <div className="mb-10">
+                <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-3xl p-8 shadow-xl">
+                  <div className="flex items-center mb-4">
+                    <div className="w-8 h-8 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-xl flex items-center justify-center mr-3">
+                      <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                      </svg>
+                    </div>
+                    <h4 className="text-white font-bold text-lg">题目内容</h4>
+                  </div>
+                  <div className="bg-white/5 rounded-2xl p-6 border border-white/10">
+                    <div 
+                      className="text-xl leading-relaxed text-white font-medium"
+                      dangerouslySetInnerHTML={{ 
+                        __html: renderMathContent(currentItem.stem.text) 
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
 
               {/* 答题区域 */}
-              <div className="space-y-6">
+              <div className="space-y-8">
                 {/* 数值输入框（智能显示） */}
                 {showNumericalInput && (
-                  <div>
-                    <label htmlFor="numerical-answer" className="block text-sm font-medium text-gray-700 mb-2">
-                      数值答案:
-                    </label>
-                    <div className="flex space-x-2">
+                  <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-3xl p-6">
+                    <div className="flex items-center mb-4">
+                      <div className="w-8 h-8 bg-gradient-to-r from-emerald-400 to-teal-500 rounded-xl flex items-center justify-center mr-3">
+                        <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                        </svg>
+                      </div>
+                      <h4 className="text-white font-bold text-lg">数值答案</h4>
+                    </div>
+                    <div className="flex space-x-3">
                       <input
                         id="numerical-answer"
                         type="text"
                         value={userAnswer}
                         onChange={(e) => setUserAnswer(e.target.value)}
                         placeholder="请输入数值答案..."
-                        className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                        className="flex-1 px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:border-emerald-400 transition-all duration-300"
                         disabled={isSubmitting}
                       />
                       <button
                         onClick={handleNumericalSubmit}
                         disabled={isSubmitting || !userAnswer.trim()}
-                        className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-2xl hover:shadow-xl hover:shadow-emerald-500/25 disabled:opacity-50 font-bold transition-all duration-300 hover:-translate-y-1"
                         aria-label="提交数值答案"
                       >
                         提交
@@ -514,88 +534,103 @@ function PracticePageContent() {
                 )}
 
                 {/* 通用答案输入框 */}
-                <div>
-                  <label htmlFor="general-answer" className="block text-sm font-medium text-gray-700 mb-2">
-                    您的答案:
-                  </label>
+                <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-3xl p-6">
+                  <div className="flex items-center mb-4">
+                    <div className="w-8 h-8 bg-gradient-to-r from-blue-400 to-purple-500 rounded-xl flex items-center justify-center mr-3">
+                      <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                      </svg>
+                    </div>
+                    <h4 className="text-white font-bold text-lg">您的答案</h4>
+                  </div>
                   <textarea
                     id="general-answer"
                     value={userAnswer}
                     onChange={(e) => setUserAnswer(e.target.value)}
                     placeholder="请输入您的答案或解题过程..."
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 resize-none"
-                    rows={3}
+                    className="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 resize-none transition-all duration-300"
+                    rows={4}
                     disabled={isSubmitting}
                   />
                 </div>
 
                 {/* 提交按钮 */}
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-2 gap-6">
                   <button
                     onClick={() => submitAnswer(true)}
                     disabled={isSubmitting}
-                    className="px-6 py-3 bg-green-500 text-white rounded-md hover:bg-green-600 disabled:opacity-50 font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-green-500"
+                    className="group inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-3xl hover:shadow-2xl hover:shadow-emerald-500/25 disabled:opacity-50 font-bold transition-all duration-300 hover:-translate-y-1 border border-emerald-400/30"
                     aria-label="标记为正确答案"
                   >
                     {isSubmitting ? (
-                      <div className="flex items-center justify-center">
-                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                      <div className="flex items-center">
+                        <div className="animate-spin rounded-full h-6 w-6 border-2 border-white border-t-transparent mr-3"></div>
                         提交中...
                       </div>
                     ) : (
-                      <div className="flex items-center justify-center">
-                        <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="flex items-center">
+                        <svg className="w-6 h-6 mr-3 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                         </svg>
-                        正确
+                        <span className="text-lg">正确</span>
                       </div>
                     )}
                   </button>
                   <button
                     onClick={() => submitAnswer(false)}
                     disabled={isSubmitting}
-                    className="px-6 py-3 bg-red-500 text-white rounded-md hover:bg-red-600 disabled:opacity-50 font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-red-500"
+                    className="group inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-red-500 to-pink-600 text-white rounded-3xl hover:shadow-2xl hover:shadow-red-500/25 disabled:opacity-50 font-bold transition-all duration-300 hover:-translate-y-1 border border-red-400/30"
                     aria-label="标记为错误答案"
                   >
                     {isSubmitting ? (
-                      <div className="flex items-center justify-center">
-                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                      <div className="flex items-center">
+                        <div className="animate-spin rounded-full h-6 w-6 border-2 border-white border-t-transparent mr-3"></div>
                         提交中...
                       </div>
                     ) : (
-                      <div className="flex items-center justify-center">
-                        <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="flex items-center">
+                        <svg className="w-6 h-6 mr-3 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                         </svg>
-                        错误
+                        <span className="text-lg">错误</span>
                       </div>
                     )}
                   </button>
                 </div>
 
-                <p className="text-sm text-gray-500 text-center">
-                  💡 提示：根据您的答案正确性点击相应按钮，系统会智能调整题目难度
-                </p>
+                <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-4 border border-white/10 text-center">
+                  <p className="text-gray-300 flex items-center justify-center">
+                    <span className="text-2xl mr-2">💡</span>
+                    <span className="font-medium">提示：根据您的答案正确性点击相应按钮，AI会智能调整题目难度</span>
+                  </p>
+                </div>
               </div>
 
               {/* 能力值变化历史 */}
               {results.length > 0 && (
-                <div className="mt-8 pt-6 border-t border-gray-200">
-                  <h4 className="text-sm font-medium text-gray-700 mb-4">能力值变化轨迹:</h4>
-                  <div className="flex space-x-2 overflow-x-auto pb-2">
+                <div className="mt-10 bg-white/5 backdrop-blur-sm rounded-3xl p-6 border border-white/10">
+                  <div className="flex items-center mb-6">
+                    <div className="w-8 h-8 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-xl flex items-center justify-center mr-3">
+                      <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                      </svg>
+                    </div>
+                    <h4 className="text-white font-bold text-lg">能力值变化轨迹</h4>
+                  </div>
+                  <div className="flex space-x-4 overflow-x-auto pb-2">
                     {results.map((result, index) => (
-                      <div key={index} className="flex-shrink-0 text-center">
-                        <div className={`w-10 h-10 rounded-full flex items-center justify-center text-xs font-bold border-2 ${
+                      <div key={index} className="flex-shrink-0 text-center group">
+                        <div className={`w-16 h-16 rounded-2xl flex items-center justify-center text-sm font-bold border-2 shadow-lg transition-all duration-300 group-hover:scale-110 ${
                           (result.deltaTheta || 0) > 0 
-                            ? 'bg-green-50 text-green-700 border-green-200' 
+                            ? 'bg-gradient-to-r from-emerald-400 to-teal-500 text-white border-emerald-300 shadow-emerald-500/50' 
                             : (result.deltaTheta || 0) < 0 
-                            ? 'bg-red-50 text-red-700 border-red-200'
-                            : 'bg-gray-50 text-gray-700 border-gray-200'
+                            ? 'bg-gradient-to-r from-red-400 to-pink-500 text-white border-red-300 shadow-red-500/50'
+                            : 'bg-gradient-to-r from-gray-400 to-gray-500 text-white border-gray-300 shadow-gray-500/50'
                         }`}>
                           {(result.deltaTheta || 0) > 0 ? '+' : ''}{(result.deltaTheta || 0).toFixed(1)}
                         </div>
-                        <div className="text-xs text-gray-500 mt-1">θ={(result.theta || 0).toFixed(1)}</div>
-                        <div className="text-xs text-gray-400">第{index + 1}题</div>
+                        <div className="text-sm text-gray-300 mt-2 font-medium">θ={(result.theta || 0).toFixed(1)}</div>
+                        <div className="text-xs text-gray-400 mt-1">第{index + 1}题</div>
                       </div>
                     ))}
                   </div>

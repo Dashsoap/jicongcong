@@ -132,7 +132,17 @@ export default function Header({ currentPage }: HeaderProps = {}) {
           {/* 中间 - 当前页面指示器 */}
           {currentItem && (
             <div className="hidden md:flex items-center">
-              <div className={`flex items-center px-4 py-2 rounded-full bg-gradient-to-r ${currentItem.color} text-white shadow-lg`}>
+              <div 
+                className="flex items-center px-4 py-2 rounded-full text-white shadow-lg"
+                style={{
+                  background: currentItem.key === 'home' ? 'linear-gradient(135deg, #3b82f6, #06b6d4)' :
+                             currentItem.key === 'ask' ? 'linear-gradient(135deg, #8b5cf6, #ec4899)' :
+                             currentItem.key === 'practice' ? 'linear-gradient(135deg, #10b981, #14b8a6)' :
+                             currentItem.key === 'parent-items' ? 'linear-gradient(135deg, #f97316, #ef4444)' :
+                             currentItem.key === 'placement-test' ? 'linear-gradient(135deg, #6366f1, #8b5cf6)' :
+                             'linear-gradient(135deg, #3b82f6, #8b5cf6)'
+                }}
+              >
                 <div className="mr-2">
                   {currentItem.icon}
                 </div>

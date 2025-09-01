@@ -6,7 +6,7 @@ import { toast } from 'sonner'
 import { postJSON } from '@/lib/fetcher'
 import { isNumericalQuestion } from '@/lib/math'
 import Header from '@/components/Header'
-import MathRenderer from '@/components/MathRenderer'
+import SimpleMathRenderer from '@/components/SimpleMathRenderer'
 
 interface PracticeItem {
   id: string
@@ -489,7 +489,7 @@ function PracticePageContent() {
                     <h4 className="text-white font-bold text-lg">题目内容</h4>
                   </div>
                                      <div className="bg-white/5 rounded-2xl p-6 border border-white/10">
-                     <MathRenderer 
+                     <SimpleMathRenderer 
                        content={currentItem.stem.text || '题目内容加载中...'}
                        className="text-xl leading-relaxed text-white font-medium practice-math"
                      />

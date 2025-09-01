@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { toast } from 'sonner'
-import MathRenderer from './MathRenderer'
+import SimpleMathRenderer from './SimpleMathRenderer'
 
 export interface Message {
   id: string
@@ -98,7 +98,7 @@ export default function MessageBubble({ message, onRegenerate, onRetry }: Messag
         }`}
       >
         {/* 消息内容 */}
-        <MathRenderer 
+        <SimpleMathRenderer 
           content={message.content}
           className="whitespace-pre-wrap break-words message-math"
         />

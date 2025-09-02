@@ -33,7 +33,7 @@ export default function SimpleMathRenderer({ content, className = '' }: SimpleMa
     
     // 处理块级数学公式
     processed = processed.replace(/\$\$([^$]+)\$\$/g, (match, formula) => {
-      let formatted = formula
+      const formatted = formula
         .replace(/\\frac\{([^}]+)\}\{([^}]+)\}/g, '<span class="fraction">(<span class="numerator">$1</span>)/(<span class="denominator">$2</span>)</span>')
         .replace(/\^2/g, '<sup>2</sup>')
         .replace(/\^3/g, '<sup>3</sup>')
@@ -63,7 +63,7 @@ export default function SimpleMathRenderer({ content, className = '' }: SimpleMa
     
     // 处理行内数学公式
     processed = processed.replace(/\$([^$]+)\$/g, (match, formula) => {
-      let formatted = formula
+      const formatted = formula
         .replace(/\\frac\{([^}]+)\}\{([^}]+)\}/g, '($1)/($2)')
         .replace(/\^2/g, '²')
         .replace(/\^3/g, '³')

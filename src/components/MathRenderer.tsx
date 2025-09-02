@@ -22,6 +22,43 @@ export default function MathRenderer({ content, className = '' }: MathRendererPr
     setIsClient(true)
   }, [])
 
+  const renderMath = () => {
+    if (containerRef.current && window.MathJax && window.MathJax.typesetPromise) {
+      try {
+        // 设置内容
+        containerRef.current.innerHTML = content
+        
+        // 渲染数学公式
+        window.MathJax.typesetPromise([containerRef.current])
+          .then(() => {
+            console.log('数学公式渲染成功')
+          })
+          .catch((err: any) => {
+            console.warn('MathJax渲染失败:', err)
+            renderFallback()
+          })
+      } catch (err) {
+        console.warn('MathJax渲染异常:', err)
+        renderFallback()
+      }
+    }
+  }
+
+  const renderFallback = () => {
+    if (containerRef.current) {
+      // 简单的LaTeX符号替换作为回退方案
+      const processedContent = content
+        .replace(/\$\$([^$]+)\$\$/g, '<div class="math-display">$1</div>')
+        .replace(/\$([^$]+)\$/g, '<span class="math-inline">$1</span>')
+        .replace(/\\frac\{([^}]+)\}\{([^}]+)\}/g, '($1)/($2)')
+        .replace(/\\begin\{cases\}/g, '')
+        .replace(/\\end\{cases\}/g, '')
+        .replace(/\\\\/g, '<br/>')
+      
+      containerRef.current.innerHTML = processedContent
+    }
+  }
+
   useEffect(() => {
     if (!isClient) return
 
@@ -74,43 +111,6 @@ export default function MathRenderer({ content, className = '' }: MathRendererPr
         console.error('MathJax 初始化失败:', error)
         setIsLoaded(true)
         renderFallback()
-      }
-    }
-
-    const renderMath = () => {
-      if (containerRef.current && window.MathJax && window.MathJax.typesetPromise) {
-        try {
-          // 设置内容
-          containerRef.current.innerHTML = content
-          
-          // 渲染数学公式
-          window.MathJax.typesetPromise([containerRef.current])
-            .then(() => {
-              console.log('数学公式渲染成功')
-            })
-            .catch((err: any) => {
-              console.warn('MathJax渲染失败:', err)
-              renderFallback()
-            })
-        } catch (err) {
-          console.warn('MathJax渲染异常:', err)
-          renderFallback()
-        }
-      }
-    }
-
-    const renderFallback = () => {
-      if (containerRef.current) {
-        // 简单的LaTeX符号替换作为回退方案
-        let processedContent = content
-          .replace(/\$\$([^$]+)\$\$/g, '<div class="math-display">$1</div>')
-          .replace(/\$([^$]+)\$/g, '<span class="math-inline">$1</span>')
-          .replace(/\\frac\{([^}]+)\}\{([^}]+)\}/g, '($1)/($2)')
-          .replace(/\\begin\{cases\}/g, '')
-          .replace(/\\end\{cases\}/g, '')
-          .replace(/\\\\/g, '<br/>')
-        
-        containerRef.current.innerHTML = processedContent
       }
     }
 
